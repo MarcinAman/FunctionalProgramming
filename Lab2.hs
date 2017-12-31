@@ -86,7 +86,7 @@ flip3' f = \x y z -> f z y x
 isPalindrome :: [Char] -> Bool
 isPalindrome x = x == reverse x
 
-getElAtId :: ([Char],Int) -> Char
+getElAtId :: ([Int],Int) -> Int
 getElAtId (x:xs,n) = if n == 0
                      then x
                      else getElAtId (xs,n-1)
