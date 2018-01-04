@@ -228,3 +228,29 @@ dialog4 = do
 
 twoQuestions4 :: IO ()
 twoQuestions4 = putStrLn "What is your name? " >> getLine >>= \line1 -> getLine >>= \line2 -> putStrLn $line1 ++ line2
+
+-- 1.Przepisać poniższy kod w użyciem >>, >>=
+--
+-- fun = do
+--     putStrLn "Podaj imie: "
+--     s <- geLine
+--     putStrln $ "Witaj " ++ s
+
+fun :: IO ()
+fun = putStrLn "Podaj imie: " >> getLine >>= \line -> putStrLn $ "Witaj " ++ line
+
+-- 2.Do czego ewaluuje się:
+--
+-- foldr (+) 0 ((*)<$>ZipList[1,2,3]<*>((+1)ZipList[4,5,6]))
+
+--[5,6,7] -> [1,12,21] -> 34
+
+
+
+-- 3.Napisać Functor i Foldable (kolejność pre-order) dla:
+--
+data Tree' a = Node' (Tree' a) (Tree' a) | Leaf' a
+
+instance Functor Tree' where
+    fmap f (Leaf' a) = Leaf' (f a)
+    fmap f (Node' lt rt) = Node' (fmap f lt) (fmap f rt)
