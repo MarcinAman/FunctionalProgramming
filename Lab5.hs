@@ -194,40 +194,26 @@ instance Functor MyTriple where
   fmap f (MyTriple (a,b,c)) = MyTriple (f a, f b, f c)
 
 
+--1. Napisac krotki program z do, ktory wczytuje imie i wiek i wypisuje czesc/dzien dobry + imie w zaleznosci od wieku
 
---Wejsciowka:
+ageAndName :: IO ()
+ageAndName = do
+  putStrLn "Pass your name: "
+  name <- getLine
+  putStrLn "Pass your age "
+  age <- getLine
+  putStrLn $ "Age is " ++ age ++ " Name is " ++ name
 
-incIntBox :: Int -> Box Int
-incIntBox x = MkBox (x+1)
+ageAndName' :: IO ()
+ageAndName' = putStrLn "name" >> getLine >>= \line -> putStrLn "age" >> getLine >>= \line2 -> putStrLn $"Age is " ++ line ++ " Name is " ++ line2
 
-safetTail :: [a] -> Maybe [a]
-safetTail [] = Nothing
-safetTail (x:xs) = Just xs
+--2. Napisac instancje dla funktora chyba
+--instance Functor Box' where
+--  fmap f (MkBox' x) = MkBox' (f x)
 
--- ghci> incIntBox . incIntBox $ 1 -- !
--- ghci> safeTail . safeTail $ [1..5] -- !
--- ghci> safeTail [1..5] >>= safeTail -- OK
-
-
-echo4 :: IO ()
-echo4 = do
-  line <- getLine
-  line2 <- getLine
-  putStrLn $ line ++ " " ++ line2
-
-dialog4 :: IO ()
-dialog4 = do
-  putStrLn "What is your happy number? "
-  line <-getLine
-  let num = read line :: Int in
-          if num == 7
-          then putStrLn "Ah, lucky 7!"
-          else if odd num
-              then putStrLn "Odd number! That's most people's choice..."
-              else putStrLn "Hm, even number? Unusual!"
-
-twoQuestions4 :: IO ()
-twoQuestions4 = putStrLn "What is your name? " >> getLine >>= \line1 -> getLine >>= \line2 -> putStrLn $line1 ++ line2
+--3. Definicja monady, dokladnie to dopisac definicje tego znaczka ==>
+--(>>=) :: Monad m => m a -> (a -> m b) -> m b
+--(>>) :: Monad m => m a -> m b -> m b
 
 -- 1.Przepisać poniższy kod w użyciem >>, >>=
 --
@@ -244,6 +230,12 @@ fun = putStrLn "Podaj imie: " >> getLine >>= \line -> putStrLn $ "Witaj " ++ lin
 -- foldr (+) 0 ((*)<$>ZipList[1,2,3]<*>((+1)ZipList[4,5,6]))
 
 --[5,6,7] -> [1,12,21] -> 34
+
+--Main Control.Applicative> pure (+) <*> ZipList [1,2,3] <*> ZipList [100,100,100]
+--ZipList {getZipList = [101,102,103]}
+
+--Main Control.Applicative> [1..2] *> [11..15]
+--[11,12,13,14,15,11,12,13,14,15]
 
 
 
